@@ -14,7 +14,7 @@ register_source(name='elm-oracle',
                 priority=9,
                 abbreviation='elm',
                 scopes=['elm'],
-                cm_refresh_patterns=[r'\.$'],)
+                cm_refresh_patterns=[r'\.'],)
 
 import json
 import subprocess
