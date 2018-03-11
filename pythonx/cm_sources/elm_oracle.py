@@ -17,6 +17,7 @@ register_source(name='elm-oracle',
                 cm_refresh_patterns=[r'\.'],)
 
 import json
+import re
 import subprocess
 from os import path
 
@@ -36,7 +37,7 @@ class Source(Base):
         startcol = ctx['startcol']
         filepath = ctx['filepath']
 
-        query = typed.lstrip(" \t\'\"")
+        query = self._get_query(typed)
         args = ['elm-oracle', filepath, query]
 
         logger.debug("args: %s", args)
@@ -80,3 +81,9 @@ class Source(Base):
             return path.dirname(filepath)
 
         return ret
+
+    def _get_query(self, typed):
+        m = re.search(r'[^\s\'"]*$', typed)
+        if m:
+            return m.group()
+        return None
